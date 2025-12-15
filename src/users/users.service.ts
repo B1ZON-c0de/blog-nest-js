@@ -51,7 +51,10 @@ export class UsersService {
   }
 
   async update(id: string, data: UpdateUserDto) {
-    if (await this.prisma.user.findUnique({ where: { email: data.email } })) {
+    if (
+      data.email &&
+      (await this.prisma.user.findUnique({ where: { email: data.email } }))
+    ) {
       throw new ConflictException({
         status: 409,
         error: 'Пользователь с таким email уже существует',

@@ -5,7 +5,7 @@ import {
   Body,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
+
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { HashService } from './hash.service';
@@ -16,7 +16,6 @@ import { JwtService } from '@nestjs/jwt';
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
     private readonly usersService: UsersService,
     private readonly hashService: HashService,
     private readonly prisma: PrismaService,

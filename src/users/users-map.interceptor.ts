@@ -15,14 +15,20 @@ export class UsersMapInterceptor implements NestInterceptor {
     next: CallHandler,
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
-      map((user: UserOmit) => ({
-        data: {
-          name: user.name,
-          email: user.email,
-          bio: user.bio,
-          avatar: user.avatar,
-        },
-      })),
+      map((user: UserOmit) => {
+        if (!user) {
+          return { data: null };
+        }
+
+        return {
+          data: {
+            name: user.name,
+            email: user.email,
+            bio: user.bio,
+            avatar: user.avatar,
+          },
+        };
+      }),
     );
   }
 }
