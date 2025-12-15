@@ -12,10 +12,10 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
 
+    AuthModule,
     UsersModule,
     PostsModule,
     CommentsModule,
-    AuthModule,
     PrismaModule,
   ],
 })

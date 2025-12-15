@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from 'src/users/users.module';
 import { HashService } from './hash.service';
@@ -24,7 +23,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     PrismaModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, HashService],
+  providers: [HashService],
   exports: [JwtModule],
 })
 export class AuthModule {}

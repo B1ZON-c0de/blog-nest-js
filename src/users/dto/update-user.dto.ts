@@ -1,7 +1,6 @@
 import { IsEmail, IsOptional, IsString } from 'class-validator';
-import { UserUpdateInput } from 'generated/prisma/models';
 
-export class UpdateUserDto implements UserUpdateInput {
+export class UpdateUserDto {
   @IsOptional()
   @IsString()
   name?: string;
@@ -13,4 +12,12 @@ export class UpdateUserDto implements UserUpdateInput {
   @IsOptional()
   @IsString()
   password?: string;
+
+  @IsOptional()
+  @IsString()
+  avatar?: string;
+
+  @IsOptional()
+  @IsString()
+  bio?: string;
 }

@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserCreateInput } from 'generated/prisma/models';
 import { User } from 'generated/prisma/client';
@@ -10,7 +14,10 @@ export class UsersService {
 
   async create(data: UserCreateInput) {
     if (await this.prisma.user.findUnique({ where: { email: data.email } })) {
-      throw new ConflictException('Пользователь с таким email уже существует');
+      throw new ConflictException({
+        status: 409,
+        error: 'Пользователь с таким email уже существует',
+      });
     }
     return this.prisma.user.create({ data });
   }
@@ -32,6 +39,10 @@ export class UsersService {
   }
 
   async delete(id: string) {
+    const user = await this.prisma.user.findFirst({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`Пользователь с ID ${id} не найден`);
+    }
     return this.prisma.user.delete({
       where: {
         id: id,
@@ -41,7 +52,10 @@ export class UsersService {
 
   async update(id: string, data: UpdateUserDto) {
     if (await this.prisma.user.findUnique({ where: { email: data.email } })) {
-      throw new ConflictException('Пользователь с таким email уже существует');
+      throw new ConflictException({
+        status: 409,
+        error: 'Пользователь с таким email уже существует',
+      });
     }
     return this.prisma.user.update({
       where: {

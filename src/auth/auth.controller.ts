@@ -45,6 +45,11 @@ export class AuthController {
       return {
         access_token: await this.jwt.signAsync(paylaod),
       };
+    } else {
+      throw new UnauthorizedException({
+        status: 401,
+        error: 'Неверный email или пароль',
+      });
     }
   }
 }
